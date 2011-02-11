@@ -20,7 +20,7 @@ module Typekit
       
       def create(params)
         params = @@defaults.merge(params)
-        response = Client.post("/kits/", :query => params)['kit']
+        response = Client.request(:post, 'kit', "/kits/", :query => params)
         Kit.new(response)
       end
       
