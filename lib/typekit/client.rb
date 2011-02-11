@@ -5,7 +5,7 @@ module Typekit
     # debug_output
   
     def initialize(token)
-      self.class.default_params :token => token
+      self.class.headers 'X-Typekit-Token' => token
     end
     
     def method_missing(method, *args, &block)
@@ -19,14 +19,6 @@ module Typekit
     end
     
     class << self
-      # def method_missing(method, *args, &block)
-      #   super unless self.respond_to? method
-      #   define_method method do |*args, &block|
-      #     send(method, *args, &block)
-      #   end
-      #   send(method, *args, &block)
-      # end
-      
       def kits
         Kit.list
       end
@@ -40,10 +32,9 @@ module Typekit
       end
     
       def create_kit(params)
-        params = Kit.defaults.merge(params)
-        response = Client.post("/kits/", :query => params)['kit']
-        Kit.new(response)
-      end
+        Kit.create(params)
+      end      
     end
+    
   end
 end

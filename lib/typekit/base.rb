@@ -1,6 +1,6 @@
 module Typekit
   class Base
-    def initialize(attributes = nil)
+    def initialize(attributes = {})
       mass_assign(attributes)
       yield self if block_given?
     end

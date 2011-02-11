@@ -18,6 +18,12 @@ module Typekit
         end
       end
       
+      def create(params)
+        params = @@defaults.merge(params)
+        response = Client.post("/kits/", :query => params)['kit']
+        Kit.new(response)
+      end
+      
       def lazy_load(*attributes)
         attributes.each do |attribute|
           define_method :"#{attribute}" do
@@ -35,7 +41,7 @@ module Typekit
     end
   
     def fetch(attribute = nil)
-      mass_assign(Client.get("/kits/#{@id}")['kit'])
+      mass_assign Client.get("/kits/#{@id}")['kit']
       instance_variable_get("@#{attribute}") unless attribute.nil?
     end
     alias :reload :fetch
