@@ -19,8 +19,7 @@ module Typekit
     end
 
     class << self
-      def request(http_method, return_key, *args)
-        response = send(http_method, *args)
+      def handle_response(response)
         status = response.headers['status'].to_i
         
         case status
@@ -28,11 +27,16 @@ module Typekit
           when 400..499 then raise APIError, response
           when 500..599 then raise ServiceError, response
         end
-        
-        raise "#{return_key} not found in response" if response[return_key].nil?
-        response[return_key]
+
+        response.values.first if response.values.any?
       end
       
+      [:get, :post, :delete].each do |http_method|
+        define_method :"api_#{http_method}" do |*args|
+          handle_response send(http_method, *args)
+        end
+      end
+            
       def kits
         Kit.list
       end

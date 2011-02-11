@@ -9,18 +9,20 @@ module Typekit
       end
       
       def find(id)
-        Kit.new(Client.get("/kits/#{id}")['kit'])
+        kit = Kit.new(:id => id)
+        kit.reload
+        kit
       end
   
       def list
-        Client.get('/kits')['kits'].inject([]) do |kits, attributes|
+        Client.api_get('/kits').inject([]) do |kits, attributes|
           kits << Kit.new(attributes)
         end
       end
       
       def create(params)
         params = @@defaults.merge(params)
-        response = Client.request(:post, 'kit', "/kits/", :query => params)
+        response = Client.api_post("/kits", :query => params)
         Kit.new(response)
       end
       
