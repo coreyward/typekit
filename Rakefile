@@ -15,14 +15,15 @@ Jeweler::Tasks.new do |gem|
   gem.name = "typekit"
   gem.homepage = "http://github.com/coreyward/typekit"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "coreyward@me.com"
+  gem.summary = %{Ruby library for accessing the Typekit REST API.}
+  gem.description = %{Ruby library for accessing the Typekit REST API.}
+  gem.email = "corey.atx@gmail.com"
   gem.authors = ["Corey Ward"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
   #  gem.add_development_dependency 'rspec', '> 1.2.3'
+  gem.add_dependency 'httparty', '~> 0.7.3'
 end
 Jeweler::RubygemsDotOrgTasks.new
 
