@@ -1,14 +1,18 @@
 module Typekit
   class Family
     include MassAssignment
-    attr_accessor :id, :name, :slug, :web_link, :foundry, :variations, :libraries
-    # @todo Handle variations appropriately
+    attr_accessor :id, :name, :slug, :web_link, :description, :foundry, :variations, :libraries
+    
+    # Typekit::Family.new isn't expected usage
+    private :initialize
     
     class << self
       # Retrieve a specific Family
       # @param id [String] The Typekit Family id (e.g. 'brwr' or 'gkmg')
       def find(id)
-        Family.new Client.get("/families/#{id}")
+        family = Family.new Client.get("/families/#{id}")
+        family.variations.map! { |v| Variation.send(:new, v) }
+        family
       end
       
       # Retrieve a Family by Typekit slug

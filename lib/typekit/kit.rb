@@ -1,4 +1,6 @@
 module Typekit
+  # @todo Allow adding and removing of families & variations
+  # @todo Get information for a specific family in the kit (/kits/:kit/families/:family)
   class Kit
     include MassAssignment
     
