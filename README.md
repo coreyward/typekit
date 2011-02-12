@@ -30,7 +30,6 @@ a class variable (ie. it'll be shared across instances of Typekit::Client). This
     Typekit::Kit.all             #=> [<Typekit::Kit @id='abcdef'>, <Typekit::Kit @id='ghijkl', ...]
     Typekit::Kit.find('abcdef')  #=> <Typekit::Kit @id='abcdef', @name="Test", ...>
     
-    
 Detailed information for kits gets loaded lazily when you use `Typekit::Kit.all`. This allows us to create instances
 of `Typekit::Kit` without the full set of attributes and without requiring you to manually load that data.
 
@@ -38,6 +37,34 @@ of `Typekit::Kit` without the full set of attributes and without requiring you t
     kits.first            #=> <Typekit::Kit @id='abcdef'>
     kits.first.name       #=> "Test"
     kits.first            #=> <Typekit::Kit @id='abcdef', @name='Test', @analytics=false, @badge=false, @domains=['localhost'], @families=[]>
+    
+You can make changes to a Kit by altering the attributes and calling `save`:
+
+    kit = typekit.kit('abcdef')
+    kit.name = 'Derezzed'
+    kit.domains << 'localhost'
+    kit.save
+    
+When you call `Kit#save`, the kit is also published. If you don't want this to happen, pass `false` as the only argument.
+
+Now, onto more useful functionality. You can get information about a family (Typekit's lingo), including detailed information
+about the variations available. For a full list of the details, either check the RubyDoc documentation or Typekit API docs.
+
+    # Get a family by ID
+    family = typekit.family('brwr')
+    
+    # Get a family by slug
+    family = typekit.family_by_slug('ff-meta-web-pro')
+    
+    # Get a family by name (gets converted to a slug automatically)
+    family = typekit.family_by_name('FF Meta Web Pro')
+    
+    # Get a particular variation (details lazy-loaded)
+    variation = typekit.family('brwr').variation('n4')
+    variation                #=> <Typekit::Variation @id="brwr:n4", @name="FF Meta Web Pro Normal">
+    variation.font_weight    #=> "400"
+    variation                #=> <Typekit::Variation @id="brwr:n4", @name="FF Meta Web Pro Normal", @font_weight="400", ...>
+    
     
 Documentation
 -------------

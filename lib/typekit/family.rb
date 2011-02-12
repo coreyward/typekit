@@ -2,9 +2,14 @@ module Typekit
   class Family
     include MassAssignment
     attr_accessor :id, :name, :slug, :web_link, :description, :foundry, :variations, :libraries
-    
     # Typekit::Family.new isn't expected usage
     private :initialize
+    
+    # Find a variation in this Family by the Font Variation Description
+    # @param id [String] Family/Font variation ID/Description (e.g. n4 or i7)
+    def variation(id)
+      variations.select { |v| v.id.split(':').last == id }.first
+    end
     
     class << self
       # Retrieve a specific Family
