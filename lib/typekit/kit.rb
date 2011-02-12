@@ -15,14 +15,14 @@ module Typekit
       end
   
       def list
-        Client.api_get('/kits').inject([]) do |kits, attributes|
+        Client.get('/kits').inject([]) do |kits, attributes|
           kits << Kit.new(attributes)
         end
       end
       
       def create(params)
         params = @@defaults.merge(params)
-        response = Client.api_post("/kits", :query => params)
+        response = Client.post("/kits", :query => params)
         Kit.new(response)
       end
       
@@ -43,7 +43,7 @@ module Typekit
     end
   
     def fetch(attribute = nil)
-      mass_assign Client.get("/kits/#{@id}")['kit']
+      mass_assign Client.get("/kits/#{@id}")
       instance_variable_get("@#{attribute}") unless attribute.nil?
     end
     alias :reload :fetch

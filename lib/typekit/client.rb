@@ -31,9 +31,11 @@ module Typekit
         response.values.first if response.values.any?
       end
       
-      [:get, :post, :delete].each do |http_method|
-        define_method :"api_#{http_method}" do |*args|
-          handle_response send(http_method, *args)
+      [:get, :post, :delete].each do |http_verb|
+        party_method = :"party_#{http_verb}"
+        class_eval %{alias :#{party_method} #{http_verb}}
+        define_method http_verb do |*args|
+          handle_response send(party_method, *args)
         end
       end
             
