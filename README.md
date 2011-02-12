@@ -38,6 +38,11 @@ of `Typekit::Kit` without the full set of attributes and without requiring you t
     kits.first            #=> <Typekit::Kit @id='abcdef'>
     kits.first.name       #=> "Test"
     kits.first            #=> <Typekit::Kit @id='abcdef', @name='Test', @analytics=false, @badge=false, @domains=['localhost'], @families=[]>
+    
+Documentation
+-------------
+
+Full documentation for the latest version can be found at [RubyDoc](http://rubydoc.info/github/coreyward/typekit).
 
 Contributing
 ------------
