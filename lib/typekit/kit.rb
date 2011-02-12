@@ -14,7 +14,7 @@ module Typekit
         kit
       end
   
-      def list
+      def all
         Client.get('/kits').inject([]) do |kits, attributes|
           kits << Kit.new(attributes)
         end

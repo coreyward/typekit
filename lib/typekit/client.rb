@@ -31,28 +31,32 @@ module Typekit
         response.values.first if response.values.any?
       end
       
-      [:get, :post, :delete].each do |http_verb|
-        party_method = :"party_#{http_verb}"
-        class_eval %{alias :#{party_method} #{http_verb}}
+      # Handle all HTTParty responses with some error handling so that our
+      # individual methods don't have to worry about it at all (although they)
+      # can (and should where relevant) rescue from errors when they are able to.
+      [:get, :head, :post, :put, :delete].each do |http_verb|
         define_method http_verb do |*args|
-          handle_response send(party_method, *args)
+          handle_response super(*args)
         end
       end
-            
+      
+      # See `Typekit::Kit.all`
       def kits
-        Kit.list
+        Kit.all
       end
 
+      # See `Typekit::Kit.find`
       def kit(id)
         Kit.find id
+      end
+      
+      # See `Typekit::Kit.create`
+      def create_kit(params)
+        Kit.create(params)
       end
 
       def family(id)
         Family.find id
-      end
-
-      def create_kit(params)
-        Kit.create(params)
       end
     end
 
