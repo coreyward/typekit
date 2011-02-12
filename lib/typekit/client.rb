@@ -77,6 +77,27 @@ module Typekit
       def create_kit(params)
         Kit.create(params)
       end
+      
+      # Retrieve a specific Family
+      # @see Typekit::Family.find
+      # @param id [String] The Typekit Family id (e.g. 'brwr' or 'gkmg')
+      def family(id)
+        Family.find(id)
+      end
+      
+      # Retrieve a Family by Typekit slug
+      # @see Typekit::Family.find_by_slug
+      # @param slug [String] The Typekit Family slug for the font family (e.g. 'ff-meta-web-pro' or 'droid-sans')
+      def family_by_slug(slug)
+        Family.find_by_slug(slug)
+      end
+      
+      # Retrieve a Family by font family name
+      # @see Typekit::Family.find_by_name
+      # @param name [String] The name of the font family without variation (e.g. 'FF Meta Web Pro' or 'Droid Sans')
+      def family_by_name(name)
+        Family.find_by_name(name)
+      end
     end
 
     # @todo Put this somewhere better than Typekit::Client
