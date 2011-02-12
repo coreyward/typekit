@@ -1,13 +1,19 @@
 module Typekit
-  class Client < Typekit::Base
+  class Client
     include HTTParty
     base_uri 'https://typekit.com/api/v1/json'
-    # debug_output
 
+    # @param token [String] Your Typekit API token
     def initialize(token)
-      self.class.headers 'X-Typekit-Token' => token
+      set_token token
     end
 
+    # Rather than making laborious calls to `Typekit::Client.kits` you can create an instance
+    # of the {Typekit::Client} and call methods on it. Instance methods will be defined for 
+    # class methods on their first utilization.
+    # @example
+    #   typekit = Typekit::Client.new('your token here')
+    #   typekit.kits    #=> [...]
     def method_missing(method, *args, &block)
       super unless self.class.respond_to? method
       self.class.class_eval do
@@ -19,6 +25,9 @@ module Typekit
     end
 
     class << self
+      # Handle responses from HTTParty calls to the Typekit API with
+      # some generic response interpretation and manipulation. 
+      # @todo Add individual errors for various HTTP Status codes
       def handle_response(response)
         status = response.headers['status'].to_i
         
@@ -30,6 +39,7 @@ module Typekit
 
         response.values.first if response.values.any?
       end
+      private :handle_response
       
       # Handle all HTTParty responses with some error handling so that our
       # individual methods don't have to worry about it at all (although they)
@@ -40,26 +50,36 @@ module Typekit
         end
       end
       
-      # See `Typekit::Kit.all`
+      # Set the Typekit API token to be used for subsequent calls.
+      # @note This is set to a class variable, so all instances of Typekit::Client
+      #   will use the same API token. This is due to the way HTTParty works.
+      # @param token [String] Your Typekit API token
+      # @todo Work around the class variable limitation of HTTParty to allow use of 
+      #   the API with multiple tokens.
+      def set_token(token)
+        headers 'X-Typekit-Token' => token
+      end
+      
+      # List kits available for this account
+      # @see Typekit::Kit.all
       def kits
         Kit.all
       end
 
-      # See `Typekit::Kit.find`
+      # Retrieve a specific kit
+      # @see Typekit::Kit.find
       def kit(id)
         Kit.find id
       end
       
-      # See `Typekit::Kit.create`
+      # Create a new kit
+      # @see Typekit::Kit.create
       def create_kit(params)
         Kit.create(params)
       end
-
-      def family(id)
-        Family.find id
-      end
     end
 
+    # @todo Put this somewhere better than Typekit::Client
     class APIError < ArgumentError
       attr_reader :response
       

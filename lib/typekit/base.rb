@@ -1,8 +1,9 @@
 module Typekit
-  class Base
+  # Contains mass assignment functionality for building objects out of hashes.
+  # @abstract
+  module MassAssignment
     def initialize(attributes = {})
       mass_assign(attributes)
-      yield self if block_given?
     end
     
     def mass_assign(attributes)
