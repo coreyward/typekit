@@ -65,21 +65,36 @@ module Typekit
     #   data. This means we can return an array of Kit objects for {Kit.all}
     #   without making N+1 requests to the API.
     # @param attribute [Symbol] Optionally return a single attribute after data is loaded
+    # @return Returns @attribute if attribute argument is specified; otherwise returns self
     def fetch(attribute = nil)
       mass_assign Client.get("/kits/#{@id}")
-      instance_variable_get("@#{attribute}") unless attribute.nil?
+      attribute ? instance_variable_get("@#{attribute}") : self
     end
     alias :reload :fetch
+    
+    # Save kit attributes like name and domains. This does *not* alter the families
+    # added to the kit. 
+    # @param publish_after_save [Boolean] Commit changes saved to the published kit. See {#publish}.
+    # @return [Boolean] Status of the operation (including the publishing, if it is called)
+    def save(publish_after_save = true)
+      attributes = [:name, :analytics, :badge, :domains].inject({}) { |attributes, x| attributes[x] = instance_variable_get("@#{x}"); attributes }
+      result = mass_assign Client.post("/kits/#{@id}", :query => attributes)
+      published = publish if publish_after_save
+      
+      # For the parenthesized statement, true && true or false && false are acceptable.
+      # but xor does the exact opposite, so we negate it.
+      result && !(publish_after_save ^ published)
+    end
     
     # Typekit maintains the changes you have made to a Kit in a "working" state 
     # until you specify that it is ready to be published. After the state has been
     # changed to "published" your kit will be queued to be pushed out to their CDN
     # and served to new requests. This can take up to 5 minutes when they are under
     # heavy load.
+    # @return [Time] The date & time that the kit was last published
     def publish
       Client.post("/kits/#{@id}/publish")
     end
-    alias :save :publish
     
     # Delete a kit from Typekit
     # @note Typekit does not have this functionality in their API at this time. When they do,
