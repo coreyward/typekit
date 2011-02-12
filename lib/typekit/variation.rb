@@ -33,5 +33,9 @@ module Typekit
       attribute ? instance_variable_get("@#{attribute}") : self
     end
     alias :reload :fetch
+    
+    def to_fvd
+      name.split(':').last
+    end
   end
 end

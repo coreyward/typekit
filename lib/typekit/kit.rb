@@ -107,5 +107,22 @@ module Typekit
       Client.delete("/kits/#{@id}")
     end
     alias :destroy :delete
+    
+    def add_family(id, params = {})
+      params = { :variations => [], :subset => 'default' }.merge(params)
+      !!Client.post("/kits/#{@id}/families/#{id}", :query => params)
+    end
+    
+    def update_family(id)
+      raise 'Block required' unless block_given?
+      family = Client.get("/kits/#{@id}/families/#{id}")
+      yield family
+      family.keep_if { |k,v| %w{variations subset}.include? k }
+      !!Client.post("/kits/#{@id}/families/#{id}", :query => family)
+    end
+    
+    def delete_family(id)
+      !!Client.delete("/kits/#{@id}/families/#{id}")
+    end
   end
 end
