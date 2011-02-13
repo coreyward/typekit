@@ -1,8 +1,10 @@
 Typekit API Client
 ==================
 
-This is a Ruby client for the [Typekit API](http://typekit.com/docs/api). **It is still in development**. Feel free to help out, 
-or just watch the project and check it out when it gets closer to completion. Any tips/pointers are much appreciated.
+This is a Ruby client for the [Typekit API](http://typekit.com/docs/api).
+
+There aren't any tests as of yet. Help writing tests would be great, as would feedback on the overall architecture of the 
+client. Any suggestions on how to improve it are welcome, and pull requests for improvements are more than welcome.
 
 You can get in touch with me at `corey.atx.at.gmail.com`.
 
@@ -35,6 +37,18 @@ You'll need a Typekit account and a Typekit API token to use the Typekit API. Yo
 There are two ways you can work with the Typekit API client: directly through the class variables, or via an
 instance of the `Typekit::Client` object. Either way, beware that the token you provide will be assigned to
 a class variable (ie. it'll be shared across instances of Typekit::Client). This is due to the way HTTParty works.
+
+### Install
+
+Quick and simple...
+
+    $ gem install typekit
+
+...add the gem to your Gemfile...
+
+    gem 'typekit'
+    
+...and done!
 
 ### Getting Started
 
