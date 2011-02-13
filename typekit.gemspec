@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{typekit}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Corey Ward"]
@@ -31,7 +31,8 @@ Gem::Specification.new do |s|
     "lib/typekit/kit.rb",
     "lib/typekit/variation.rb",
     "test/helper.rb",
-    "test/test_typekit.rb"
+    "test/test_typekit.rb",
+    "typekit.gemspec"
   ]
   s.homepage = %q{http://github.com/coreyward/typekit}
   s.licenses = ["MIT"]
