@@ -1,5 +1,4 @@
 module Typekit
-  # @todo Allow adding and removing of families & variations
   # @todo Get information for a specific family in the kit (/kits/:kit/families/:family)
   class Kit
     include MassAssignment
@@ -108,11 +107,27 @@ module Typekit
     end
     alias :destroy :delete
     
+    # Add a family to this kit (does not publish changes)
+    # @param id [String] Typekit Font Family id (e.g. 'brwr')
+    # @param params [Hash] Attributes for the family to be added
+    # @option params [Array] :variations ([]) Font Variation Descriptions ('n4', 'i7', etc.) for the variations to be included
+    # @option params [String] :subset ('default') Character subset to be served ('all' or 'default')
+    # @return [Boolean] True on success; error raised on failure
     def add_family(id, params = {})
       params = { :variations => [], :subset => 'default' }.merge(params)
       !!Client.post("/kits/#{@id}/families/#{id}", :query => params)
     end
     
+    # Update a family on this kit (does not publish changes)
+    # @param id [String] Typekit Font Family id (e.g. 'brwr')
+    # @param [Block] A block manipulating the family attributes
+    # @yieldparam [Hash] family The existing definition for this family
+    # @example Updating a font family
+    #   Typekit::Kit.update_family('abcdef') do |family|
+    #     family['subset'] = 'all'
+    #     family['variations'] << 'i3'
+    #   end
+    # @return [Boolean] True on success; error raised on failure
     def update_family(id)
       raise 'Block required' unless block_given?
       family = Client.get("/kits/#{@id}/families/#{id}")
@@ -121,8 +136,12 @@ module Typekit
       !!Client.post("/kits/#{@id}/families/#{id}", :query => family)
     end
     
+    # Delete a family from this kit (does not publish changes)
+    # @param id [String] Typekit Font Family id (e.g. 'brwr')
+    # @return [Boolean] True on success; error raised on failure
     def delete_family(id)
       !!Client.delete("/kits/#{@id}/families/#{id}")
     end
+    alias :remove_family :delete_family
   end
 end
