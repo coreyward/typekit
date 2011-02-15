@@ -41,6 +41,7 @@ module Typekit
       # @option params [Array] :domains Required: An array of the domains that this kit will be used on
       # @option params [Boolean] :analytics (false) Allow Typekit to collect kit-usage data via Google Analytics
       # @option params [Boolean] :badge (false) Show the Typekit colophon badge on websites using this kit
+      # @return [Typekit::Kit] The resulting kit
       def create(params)
         params = @@defaults.merge(params)
         response = Client.post("/kits", :query => params)
@@ -97,12 +98,8 @@ module Typekit
       Client.post("/kits/#{@id}/publish")
     end
     
-    # Delete a kit from Typekit
-    # @note Typekit does not have this functionality in their API at this time. When they do,
-    #   the `raise` call in this method can be removed, along with this warning.
-    # @raise An error, always, telling you this doesn't work.
+    # Delete this kit from Typekit
     def delete
-      raise "The Typekit API does not support deleting a kit at this time."
       Client.delete("/kits/#{@id}")
     end
     alias :destroy :delete

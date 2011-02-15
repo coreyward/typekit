@@ -44,11 +44,10 @@ Quick and simple...
 
     $ gem install typekit
 
-...add the gem to your Gemfile...
+Or just add the gem to your Gemfile and run `bundle install`
 
     gem 'typekit'
-    
-...and done!
+
 
 ### Getting Started
 
@@ -59,15 +58,23 @@ Quick and simple...
     kits = typekit.kits    #=> [<Typekit::Kit @id='abcdef'>, <Typekit::Kit @id='ghijkl', ...]
 
     # Get detailed information for a kit by ID
-    typekit.kit('abcdef')
+    kit = typekit.kit('abcdef')
     #=> <Typekit::Kit @id='abcdef', @name='Test', @analytics=false, @badge=false, @domains=['localhost'], @families=[...]>
+    
+    # Create a new kit with the default badge and analytics settings
+    kit = typekit.create_kit(:name => 'My Kit', :domains => ['example.com', 'example.heroku.com'])  #=> <Typekit::Kit @id='abcdef', ...>
+    
+    # Delete a kit (where `kit` is an instance of Typekit::Kit)
+    kit.delete
 
 ### Using the API without an instance of Typekit::Client
 
-    # If you prefer using the class methods directly, the following is identical to the above methods...
+If you prefer using the class methods directly to query for kits/families, the following is identical to the above methods...
+
     Typekit::Client.set_token(token)
     Typekit::Kit.all             #=> [<Typekit::Kit @id='abcdef'>, <Typekit::Kit @id='ghijkl', ...]
     Typekit::Kit.find('abcdef')  #=> <Typekit::Kit @id='abcdef', @name="Test", ...>
+    Typekit::Kit.create_kit(:name => 'My Kit', :domains => ['example.com', 'example.heroku.com'])
 
 ### Lazy Loaded Detailed Attributes    
 
