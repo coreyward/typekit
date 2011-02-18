@@ -37,7 +37,7 @@ module Typekit
     # Convert the variation name to the Font Variation Description for adding it to a Kit
     # @return [String] Font Variation ID (e.g. 'n4' or 'i7')
     def to_fvd
-      name.split(':').last
+      id.split(':').last
     end
   end
 end
