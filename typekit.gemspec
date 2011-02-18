@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{typekit}
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Corey Ward"]
-  s.date = %q{2011-02-14}
+  s.date = %q{2011-02-17}
   s.description = %q{Ruby library for accessing the Typekit REST API.}
   s.email = %q{corey.atx@gmail.com}
   s.extra_rdoc_files = [
