@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
     "lib/typekit/client.rb",
     "lib/typekit/family.rb",
     "lib/typekit/kit.rb",
+    "lib/typekit/library.rb",
     "lib/typekit/variation.rb",
     "test/helper.rb",
     "test/test_typekit.rb",
