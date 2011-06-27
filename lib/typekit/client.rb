@@ -78,6 +78,18 @@ module Typekit
         Kit.create(params)
       end
       
+      # Lists available libraries
+      # @see Typekit::Library.all
+      def libraries
+        Library.all
+      end
+      
+      # Retrieve a specific library
+      # @see Typekit::Library.find
+      def library(id, params)
+        Library.find(id, params)
+      end
+      
       # Retrieve a specific Family
       # @see Typekit::Family.find
       # @param id [String] The Typekit Family id (e.g. 'brwr' or 'gkmg')
