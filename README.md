@@ -104,6 +104,17 @@ When you call `Typekit::Kit#save`, the kit is also published. If you don't want 
     # ... later in your application, possibly even in another request
     kit = Typekit::Client.kit('abcdef')
     kit.publish     #=> Finally, changes are published to the Typekit CDN
+    
+### Getting Library Information
+
+The Typekit API allows you to both list the available libraries and view a list of families within the library. The list
+of families do not include the more detailed information found in the family specific API calls.
+
+    # Get list of libraries
+    libraries = typekit.libraries
+    
+    # Get list of families in a library
+    families = typekit.library('full', {'page' => '1', 'per_page -> '20'})
 
 ### Getting Font Family Information
 
