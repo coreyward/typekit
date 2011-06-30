@@ -2,7 +2,7 @@ module Typekit
   class Library
     include MassAssignment
     attr_accessor :id, :name
-    #Typekit::Library.new isn't expected usage
+    # Typekit::Library.new isn't expected usage
     private :initialize
     
     class << self 
@@ -12,10 +12,14 @@ module Typekit
           libraries << Library.new(attributes)
         end
       end
-      # Gets the families listed in a library
-      # @param params [Hash] Pagination variables
-      def find(id, params)
-        library = Client.get("/libraries/#{id}", :query => { :page => params['page'], :per_page => params['per_page'] } )
+      
+      # Gets a paginated list of families available in the specified library
+      # @option params [Fixnum] :page (1) Page number to retrieve
+      # @option params [Fixnum] :per_page (20) Number of results to fetch per page
+      # @return [Array] Array of Typekit::Family objects available in the specified library
+      def find(id, params = {})
+        { :page => 1, :per_page => 20 }.merge!(params)
+        library = Client.get("/libraries/#{id}", :query => params)
         library['families'].inject([]) do |families, attributes|
           families << Family.new(attributes)
         end

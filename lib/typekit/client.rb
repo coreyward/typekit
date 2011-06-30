@@ -86,7 +86,7 @@ module Typekit
       
       # Retrieve a specific library
       # @see Typekit::Library.find
-      def library(id, params)
+      def library(id, params = {})
         Library.find(id, params)
       end
       

@@ -108,13 +108,13 @@ When you call `Typekit::Kit#save`, the kit is also published. If you don't want 
 ### Getting Library Information
 
 The Typekit API allows you to both list the available libraries and view a list of families within the library. The list
-of families do not include the more detailed information found in the family specific API calls.
+of families does not include the more detailed information found in the family-specific API calls.
 
     # Get list of libraries
     libraries = typekit.libraries
     
     # Get list of families in a library
-    families = typekit.library('full', {'page' => '1', 'per_page -> '20'})
+    families = typekit.library('full', :page => 1, :per_page => 20)
 
 ### Getting Font Family Information
 
