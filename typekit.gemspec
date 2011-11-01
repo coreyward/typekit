@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Corey Ward"]
-  s.date = %q{2011-06-30}
+  s.authors = [%q{Corey Ward}]
+  s.date = %q{2011-11-01}
   s.description = %q{Ruby library for accessing the Typekit REST API.}
   s.email = %q{corey.atx@gmail.com}
   s.extra_rdoc_files = [
@@ -36,9 +36,9 @@ Gem::Specification.new do |s|
     "typekit.gemspec"
   ]
   s.homepage = %q{http://github.com/coreyward/typekit}
-  s.licenses = ["MIT"]
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
+  s.licenses = [%q{MIT}]
+  s.require_paths = [%q{lib}]
+  s.rubygems_version = %q{1.8.6}
   s.summary = %q{Ruby library for accessing the Typekit REST API.}
   s.test_files = [
     "test/helper.rb",
