@@ -6,7 +6,7 @@ module Typekit
     # Detailed information about a kit. Lazy loaded when accessed unless
     # the data already exists.
     # @see Kit#fetch
-    attr_accessor :name, :domains, :families, :analytics, :badge
+    attr_accessor :name, :domains, :families, :badge
     
     # Typekit-defined kit id
     attr_accessor :id
@@ -16,7 +16,7 @@ module Typekit
     private :initialize
     
     # @todo Allow users to change defaults easily
-    @@defaults = { :analytics => false, :badge => false }
+    @@defaults = { :badge => false }
     
     class << self
       # Find a kit by id (*not* by name)
@@ -39,7 +39,6 @@ module Typekit
       # @param params [Hash] Attributes for the newly create kit
       # @option params [String] :name Required: The name of the kit
       # @option params [Array] :domains Required: An array of the domains that this kit will be used on
-      # @option params [Boolean] :analytics (false) Allow Typekit to collect kit-usage data via Google Analytics
       # @option params [Boolean] :badge (false) Show the Typekit colophon badge on websites using this kit
       # @return [Typekit::Kit] The resulting kit
       def create(params)
@@ -59,7 +58,7 @@ module Typekit
     end
     
     # Lazy load extended information only when it's accessed
-    lazy_load :name, :analytics, :badge, :domains, :families
+    lazy_load :name, :badge, :domains, :families
   
     # Get detailed information about this kit from Typekit
     # @note This is called lazily when you access any non-loaded attribute
@@ -79,7 +78,7 @@ module Typekit
     # @param publish_after_save [Boolean] Commit changes saved to the published kit. See {#publish}.
     # @return [Boolean] Status of the operation (including the publishing, if it is called)
     def save(publish_after_save = true)
-      attributes = [:name, :analytics, :badge, :domains].inject({}) { |attributes, x| attributes[x] = instance_variable_get("@#{x}"); attributes }
+      attributes = [:name, :badge, :domains].inject({}) { |attributes, x| attributes[x] = instance_variable_get("@#{x}"); attributes }
       result = mass_assign Client.post("/kits/#{@id}", :query => attributes)
       published = publish if publish_after_save
       

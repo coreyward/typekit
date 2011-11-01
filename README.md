@@ -61,7 +61,7 @@ Or just add the gem to your Gemfile and run `bundle install`
     kit = typekit.kit('abcdef')
     #=> <Typekit::Kit @id='abcdef', @name='Test', @analytics=false, @badge=false, @domains=['localhost'], @families=[...]>
     
-    # Create a new kit with the default badge and analytics settings
+    # Create a new kit with the default badge settings
     kit = typekit.create_kit(:name => 'My Kit', :domains => ['example.com', 'example.heroku.com'])  #=> <Typekit::Kit @id='abcdef', ...>
     
     # Delete a kit (where `kit` is an instance of Typekit::Kit)
