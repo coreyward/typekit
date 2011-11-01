@@ -6,7 +6,7 @@ module Typekit
     # Detailed information about a kit. Lazy loaded when accessed unless
     # the data already exists.
     # @see Kit#fetch
-    attr_accessor :name, :domains, :families, :badge
+    attr_accessor :name, :domains, :families, :badge, :segmented_css_names
     
     # Typekit-defined kit id
     attr_accessor :id
@@ -16,7 +16,7 @@ module Typekit
     private :initialize
     
     # @todo Allow users to change defaults easily
-    @@defaults = { :badge => false }
+    @@defaults = { :badge => false, :segmented_css_names => false }
     
     class << self
       # Find a kit by id (*not* by name)
@@ -40,6 +40,7 @@ module Typekit
       # @option params [String] :name Required: The name of the kit
       # @option params [Array] :domains Required: An array of the domains that this kit will be used on
       # @option params [Boolean] :badge (false) Show the Typekit colophon badge on websites using this kit
+      # @option params [Boolean] :segmented_css_names (false) Use segmented fonts in css (e.g. name-1, name-2 versus just name)
       # @return [Typekit::Kit] The resulting kit
       def create(params)
         params = @@defaults.merge(params)
